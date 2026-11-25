@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignment Tracker</title>
+  <style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6fa;
+  color: #202938;
+  line-height: 1.5;
+}
+
+.header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e9f0;
+  padding: 17px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 9px;
+  background: #315fbd;
+  color: white;
+  display: grid;
+  place-items: center;
+  font-weight: bold;
+  letter-spacing: .5px;
+}
+
+.brand h1 {
+  font-size: 19px;
+  line-height: 1.2;
+}
+
+.brand p {
+  color: #7b8494;
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+.semester {
+  color: #52617a;
+  background: #eef3fc;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.container {
+  width: min(1100px, 90%);
+  margin: 32px auto;
+}
+
+.welcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.small-heading {
+  color: #315fbd;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1.2px;
+  margin-bottom: 6px;
+}
+
+.welcome h2 {
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+.welcome-text {
+  color: #737e8f;
+  font-size: 14px;
+}
+
+.today-box {
+  background: #ffffff;
+  border: 1px solid #e5e9f0;
+  border-radius: 10px;
+  padding: 12px 18px;
+  min-width: 125px;
+}
+
+.today-box span,
+.today-box strong {
+  display: block;
+}
+
+.today-box span {
+  color: #7b8494;
+  font-size: 11px;
+}
+
+.today-box strong {
+  margin-top: 3px;
+  font-size: 14px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.stat-card, .panel {
+  background: #ffffff;
+  border: 1px solid #e5e9f0;
+  border-radius: 11px;
+}
+
+.stat-card {
+  padding: 17px 19px;
+}
+
+.stat-label {
+  display: block;
+  color: #778294;
+  font-size: 12px;
+}
+
+.stat-card strong {
+  display: block;
+  font-size: 26px;
+  margin-top: 4px;
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.45fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.panel {
+  padding: 21px;
+}
+
+.panel h3 {
+  font-size: 18px;
+}
+
+.form-panel form {
+  margin-top: 17px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  color: #465267;
+  margin: 13px 0 6px;
+}
+
+input, select {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid #dce2eb;
+  border-radius: 7px;
+  padding: 9px 10px;
+  background: #fff;
+  color: #263246;
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+input:focus, select:focus {
+  border-color: #5279c5;
+  box-shadow: 0 0 0 2px #e8effc;
+}
+
+.primary-btn {
+  width: 100%;
+  border: 0;
+  border-radius: 7px;
+  padding: 11px;
+  margin-top: 18px;
+  background: #315fbd;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.primary-btn:hover {
+  background: #264f9f;
+}
+
+.form-message {
+  min-height: 18px;
+  margin-top: 9px;
+  font-size: 12px;
+  color: #27734d;
+}
+
+.list-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.count-pill {
+  background: #eef3fc;
+  color: #315fbd;
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 11px;
+}
+
+.tools {
+  display: grid;
+  grid-template-columns: 1fr 135px;
+  gap: 9px;
+  margin: 17px 0;
+}
+
+.assignment-list {
+  display: grid;
+  gap: 10px;
+}
+
+.assignment {
+  border: 1px solid #e7ebf1;
+  border-radius: 8px;
+  padding: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.assignment-info {
+  min-width: 0;
+}
+
+.assignment-info h4 {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.assignment-info p {
+  color: #788395;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.assignment.completed h4 {
+  text-decoration: line-through;
+  color: #8992a0;
+}
+
+.tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.tag {
+  font-size: 10px;
+  padding: 3px 7px;
+  border-radius: 5px;
+  background: #f0f2f6;
+  color: #5c6676;
+}
+
+.priority-high { background: #fff0ed; color: #c34c3d; }
+.priority-medium { background: #fff6e6; color: #9a6b19; }
+.priority-low { background: #eaf6ef; color: #34734c; }
+.status-done { background: #eaf6ef; color: #34734c; }
+
+.item-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.item-actions button {
+  border: 1px solid #dce2eb;
+  border-radius: 6px;
+  background: white;
+  padding: 6px 8px;
+  color: #43516a;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.item-actions button:hover {
+  background: #f1f4f9;
+}
+
+.item-actions .delete-btn {
+  color: #b84a4a;
+}
+
+.empty-state {
+  text-align: center;
+  color: #8791a0;
+  background: #fafbfd;
+  border: 1px dashed #dce2eb;
+  border-radius: 8px;
+  padding: 28px 12px;
+  font-size: 13px;
+}
+
+footer {
+  text-align: center;
+  color: #8a93a1;
+  font-size: 11px;
+  padding: 25px 0 5px;
+}
+
+@media (max-width: 760px) {
+  .header {
+    padding: 14px 5%;
+  }
+  .semester {
+    display: none;
+  }
+  .container {
+    width: 92%;
+    margin-top: 23px;
+  }
+  .welcome h2 {
+    font-size: 23px;
+  }
+  .welcome-text {
+    max-width: 430px;
+  }
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats {
+    gap: 8px;
+  }
+  .stat-card {
+    padding: 12px;
+  }
+  .stat-label {
+    font-size: 10px;
+  }
+  .stat-card strong {
+    font-size: 22px;
+  }
+  .today-box {
+    min-width: 95px;
+    padding: 10px;
+  }
+  .welcome {
+    align-items: flex-start;
+  }
+  .welcome-text {
+    font-size: 12px;
+  }
+  .tools {
+    grid-template-columns: 1fr;
+  }
+  .assignment {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="brand">
+      <div class="logo">AT</div>
+      <div>
+        <h1>Assignment Tracker</h1>
+        <p>Keep your college work organised</p>
+      </div>
+    </div>
+    <span class="semester">BTech CSE · Semester 1</span>
+  </header>
+
+  <main class="container">
+    <section class="welcome">
+      <div>
+        <p class="small-heading">STUDENT DASHBOARD</p>
+        <h2>Manage your assignments</h2>
+        <p class="welcome-text">Add your work, keep track of deadlines and check what is still pending.</p>
+      </div>
+      <div class="today-box">
+        <span>Today</span>
+        <strong id="todayDate">--</strong>
+      </div>
+    </section>
+
+    <section class="stats">
+      <article class="stat-card">
+        <span class="stat-label">Total assignments</span>
+        <strong id="totalCount">0</strong>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">Pending</span>
+        <strong id="pendingCount">0</strong>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">Completed</span>
+        <strong id="completedCount">0</strong>
+      </article>
+    </section>
+
+    <section class="main-grid">
+      <section class="panel form-panel">
+        <div class="panel-title">
+          <div>
+            <p class="small-heading">NEW TASK</p>
+            <h3>Add an assignment</h3>
+          </div>
+        </div>
+
+        <form id="assignmentForm">
+          <label for="title">Assignment title</label>
+          <input type="text" id="title" placeholder="e.g. HTML practical file" required>
+
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" placeholder="e.g. CSE 326" required>
+
+          <label for="dueDate">Due date</label>
+          <input type="date" id="dueDate" required>
+
+          <label for="priority">Priority</label>
+          <select id="priority">
+            <option value="Low">Low</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="High">High</option>
+          </select>
+
+          <button type="submit" class="primary-btn">Add assignment</button>
+          <p id="formMessage" class="form-message" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="panel list-panel">
+        <div class="list-heading">
+          <div>
+            <p class="small-heading">YOUR WORK</p>
+            <h3>My assignments</h3>
+          </div>
+          <span id="visibleCount" class="count-pill">0 items</span>
+        </div>
+
+        <div class="tools">
+          <input type="search" id="searchInput" placeholder="Search assignments..." aria-label="Search assignments">
+          <select id="filterSelect" aria-label="Filter assignments">
+            <option value="All">All tasks</option>
+            <option value="Pending">Pending</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+
+        <div id="assignmentList" class="assignment-list">
+          <div class="empty-state">No assignments added yet.</div>
+        </div>
+      </section>
+    </section>
+
+    <footer>
+      <p>Assignment Tracker · Made as a CSE 326 mini project</p>
+    </footer>
+  </main>
+
+  <script>
+// Assignment Tracker - basic JavaScript functionality
+
+const form = document.getElementById("assignmentForm");
+const titleInput = document.getElementById("title");
+const subjectInput = document.getElementById("subject");
+const dueDateInput = document.getElementById("dueDate");
+const priorityInput = document.getElementById("priority");
+const assignmentList = document.getElementById("assignmentList");
+const searchInput = document.getElementById("searchInput");
+const filterSelect = document.getElementById("filterSelect");
+
+// Load saved assignments safely. A damaged or unavailable localStorage value
+// should not stop the dashboard from opening.
+function loadAssignments() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("assignments") || "[]");
+    if (!Array.isArray(saved)) return [];
+
+    return saved
+      .filter(item => item && typeof item === "object")
+      .map(item => ({
+        id: item.id ?? Date.now() + Math.random(),
+        title: String(item.title ?? ""),
+        subject: String(item.subject ?? ""),
+        dueDate: String(item.dueDate ?? ""),
+        priority: ["Low", "Medium", "High"].includes(item.priority)
+          ? item.priority
+          : "Medium",
+        completed: Boolean(item.completed)
+      }))
+      .filter(item => item.title && item.subject && item.dueDate);
+  } catch (error) {
+    console.warn("Could not load saved assignments:", error);
+    return [];
+  }
+}
+
+let assignments = loadAssignments();
+
+// Show today's date on the dashboard.
+document.getElementById("todayDate").textContent =
+  new Date().toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+
+// Save the current assignment array in the browser.
+function saveAssignments() {
+  try {
+    localStorage.setItem("assignments", JSON.stringify(assignments));
+  } catch (error) {
+    console.error("Could not save assignments:", error);
+    document.getElementById("formMessage").textContent =
+      "Changes could not be saved in this browser. Check storage settings.";
+  }
+}
+
+// Update the three number cards.
+function updateStats() {
+  const completed = assignments.filter(item => item.completed).length;
+  const pending = assignments.length - completed;
+
+  document.getElementById("totalCount").textContent = assignments.length;
+  document.getElementById("pendingCount").textContent = pending;
+  document.getElementById("completedCount").textContent = completed;
+}
+
+// Add a new assignment when the form is submitted.
+form.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const newAssignment = {
+    id: Date.now(),
+    title: titleInput.value.trim(),
+    subject: subjectInput.value.trim(),
+    dueDate: dueDateInput.value,
+    priority: priorityInput.value,
+    completed: false
+  };
+
+  if (!newAssignment.title || !newAssignment.subject || !newAssignment.dueDate) {
+    document.getElementById("formMessage").textContent = "Please fill all the fields.";
+    return;
+  }
+
+  assignments.push(newAssignment);
+  saveAssignments();
+  renderAssignments();
+
+  form.reset();
+  priorityInput.value = "Medium";
+  document.getElementById("formMessage").textContent = "Assignment added successfully.";
+});
+
+// Display assignments according to the selected filter and search text.
+function renderAssignments() {
+  const searchText = searchInput.value.toLowerCase();
+  const selectedFilter = filterSelect.value;
+
+  const filteredAssignments = assignments.filter(function(item) {
+    const matchesSearch =
+      item.title.toLowerCase().includes(searchText) ||
+      item.subject.toLowerCase().includes(searchText);
+
+    const matchesFilter =
+      selectedFilter === "All" ||
+      (selectedFilter === "Pending" && !item.completed) ||
+      (selectedFilter === "Completed" && item.completed);
+
+    return matchesSearch && matchesFilter;
+  });
+
+  document.getElementById("visibleCount").textContent =
+    filteredAssignments.length + (filteredAssignments.length === 1 ? " item" : " items");
+
+  if (filteredAssignments.length === 0) {
+    assignmentList.innerHTML = '<div class="empty-state">No assignments found. Add a new assignment to get started.</div>';
+    updateStats();
+    return;
+  }
+
+  assignmentList.innerHTML = "";
+
+  filteredAssignments.forEach(function(item) {
+    const card = document.createElement("article");
+    card.className = "assignment" + (item.completed ? " completed" : "");
+
+    const info = document.createElement("div");
+    info.className = "assignment-info";
+
+    const heading = document.createElement("h4");
+    heading.textContent = item.title;
+
+    const details = document.createElement("p");
+    details.textContent = item.subject + " · Due: " + formatDate(item.dueDate);
+
+    const tags = document.createElement("div");
+    tags.className = "tags";
+
+    const priorityTag = document.createElement("span");
+    priorityTag.className = "tag priority-" + item.priority.toLowerCase();
+    priorityTag.textContent = item.priority + " priority";
+
+    const statusTag = document.createElement("span");
+    statusTag.className = "tag" + (item.completed ? " status-done" : "");
+    statusTag.textContent = item.completed ? "Completed" : "Pending";
+
+    tags.appendChild(priorityTag);
+    tags.appendChild(statusTag);
+    info.appendChild(heading);
+    info.appendChild(details);
+    info.appendChild(tags);
+
+    const actions = document.createElement("div");
+    actions.className = "item-actions";
+
+    const doneButton = document.createElement("button");
+    doneButton.textContent = item.completed ? "Undo" : "Done";
+    doneButton.addEventListener("click", function() {
+      toggleStatus(item.id);
+    });
+
+    const deleteButton = document.createElement("button");
+    deleteButton.className = "delete-btn";
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", function() {
+      deleteAssignment(item.id);
+    });
+
+    actions.appendChild(doneButton);
+    actions.appendChild(deleteButton);
+    card.appendChild(info);
+    card.appendChild(actions);
+    assignmentList.appendChild(card);
+  });
+
+  updateStats();
+}
+
+// Convert the saved date into a readable format.
+function formatDate(dateValue) {
+  const date = new Date(dateValue + "T00:00:00");
+  return date.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+}
+
+// Change an assignment between pending and completed.
+function toggleStatus(id) {
+  assignments = assignments.map(function(item) {
+    if (item.id === id) {
+      item.completed = !item.completed;
+    }
+    return item;
+  });
+
+  saveAssignments();
+  renderAssignments();
+}
+
+// Remove an assignment after confirmation.
+function deleteAssignment(id) {
+  const shouldDelete = confirm("Do you want to delete this assignment?");
+  if (!shouldDelete) return;
+
+  assignments = assignments.filter(function(item) {
+    return item.id !== id;
+  });
+
+  saveAssignments();
+  renderAssignments();
+}
+
+// Re-render the list when search or filter changes.
+searchInput.addEventListener("input", renderAssignments);
+filterSelect.addEventListener("change", renderAssignments);
+
+// Display saved assignments when the page first opens.
+renderAssignments();
+
+  </script>
+</body>
+</html>
